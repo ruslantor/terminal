@@ -1,21 +1,15 @@
 #!/bin/bash
-# i = интернет есть
-# i = интернета нет
-i=1
-while true; do
-ping -c1 8.8.8.8
-result=$?
-echo "$result" "$i"
-if [[ "$result" -eq 0 && "$i" -eq 0 ]]
+ARGS=2
+E_BADARGS=65
+if [ $# -ne "$ARGS" ]
 then 
-echo "$(date +%d-%m-%y) - интернет появился в $(date +%H:%M)" >> journal.txt
-echo "$(date +%d-%m-%y) - интернет повился в $(date +%H:%M)"
-i=1
-elif [[ "result" -ne 0 && "$i" -eq 1 ]];
-then 
-echo "$(date +%d-%m-%y) - инетрнет пропал в $(date +%H:%M)" >> journal.txt
-echo "$(date +%d-%m-%y) - интернет пропал в $(date =%H:%M)"
-i=0
+echo "Порядок использования: `basename $0` old_extensio new extension"
+exit $E_BADARGS
 fi
-sleep 5
+rm -rf answer/*
+for filename in *.$1
+do
+cp $filename answer/${filename%$1}$2
+
 done
+exit 0
